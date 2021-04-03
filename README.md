@@ -25,3 +25,4 @@ Every command also includes a "help" screen which displays and describes the com
 ```
 sego help generate
 ```
+The rest of the documentation is available <a href="https://github.com/sambe-consulting/sego">here</a>
