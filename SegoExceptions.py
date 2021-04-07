@@ -1,0 +1,3 @@
+
+class DirectryNotEmptyException(Exception):
+    pass
