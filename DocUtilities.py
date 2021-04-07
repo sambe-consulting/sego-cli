@@ -1,5 +1,5 @@
 import os
-import click
+from termcolor import colored
 
 MAIN_DIR = os.getcwd()
 
@@ -11,7 +11,7 @@ def version():
 
 
 def main_docstring():
-    return "Sego command line interface version: " + version()
+    return colored("Sego","green")+" command line interface version: " + colored(version(),"yellow")
 
 
 def doc(docstring):

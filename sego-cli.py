@@ -1,17 +1,23 @@
+#!env/bin/python3
+
 import fire
 from DocUtilities import *
+from SetupUtilities import *
+from termcolor import colored
 
 
 @doc(main_docstring())
-class Calculator(object):
+class Sego(object):
+    def __init__(self):
+        self.setup_utilities = SetupUtilities()
 
-    def double(self, number):
-        return 2 * number
+    @doc(SetupUtilities().setup_documentation())
+    def setup(self,clean_up=False):
+        if clean_up:
+            self.setup_utilities.clean_up()
+        self.setup_utilities.setup()
 
-    def half(self, number):
-        """ANother one"""
-        return number / 2
 
 
 if __name__ == '__main__':
-    fire.Fire(Calculator)
+    fire.Fire(Sego)

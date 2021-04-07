@@ -11,7 +11,6 @@ from models.application import Applications
 
 class DatabaseUtilities:
 
-
     def __init__(self):
         self.sego_home = Path.home() / ".sego"
         self.database = self.sego_home / "sego_database.db"
@@ -76,12 +75,8 @@ class DatabaseUtilities:
     def list_applications(self):
         return Applications.all()
 
-
     def setup(self):
-
-        if not os.path.exists(self.sego_home):
-            os.mkdir(self.sego_home)
-
         if not os.path.exists(self.database):
             self.create_connection(str(self.database))
             self.create_applications_table()
+            self.create_plugins_table()
