@@ -2,17 +2,19 @@ import os
 import sqlite3
 from pathlib import Path
 from sqlite3 import Error
-
+import sys,shutil
 from orator import DatabaseManager, Schema
 from orator import Model
 
 from models.application import Applications
+from models.targets import Targets
 
 
 class DatabaseUtilities:
 
     def __init__(self):
-        self.sego_home = Path.home() / ".sego"
+
+        self.sego_home = Path(".")
         self.database = self.sego_home / "sego_database.db"
         self.config = {
             'sqlite': {
@@ -56,10 +58,39 @@ class DatabaseUtilities:
     def create_plugins_table(self):
         with self.schema.connection('sqlite').create('plugins') as table:
             table.increments('id')
+
         with self.schema.table('plugins') as table:
-            table.string("name")
-            table.string("description")
-            table.string("version")
+            table.string("name").nullable()
+            table.string("description").nullable()
+            table.string("version").nullable()
+
+    def create_targets_table(self):
+        with self.schema.connection('sqlite').create('targets') as table:
+            table.increments('id')
+
+        with self.schema.table('targets') as table:
+            table.string('target').nullable()
+            table.string('description').nullable()
+            table.string('list_action').nullable()
+            table.string('generate_action').nullable()
+            table.timestamp("created_at").nullable()
+            table.timestamp("updated_at").nullable()
+
+    def register_targets(self):
+        target = Targets()
+        target.target = "Routes"
+        target.description = "This generator target manages application routes"
+        target.save()
+        target = Targets()
+        target.target = "Controllers"
+        target.description = "This generator target manages application controllers"
+        target.save()
+        target = Targets()
+        target.target = "Applications"
+        target.description = "This generator target manages applications"
+        target.save()
+
+
 
     def register_application(self, app_data):
         new_app = Applications()
@@ -76,7 +107,9 @@ class DatabaseUtilities:
         return Applications.all()
 
     def setup(self):
-        if not os.path.exists(self.database):
-            self.create_connection(str(self.database))
-            self.create_applications_table()
-            self.create_plugins_table()
+        os.remove(str(self.database))
+        self.create_connection(str(self.database))
+        self.create_applications_table()
+        self.create_plugins_table()
+        self.create_targets_table()
+        self.register_targets()

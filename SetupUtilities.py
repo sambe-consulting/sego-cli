@@ -29,9 +29,10 @@ class SetupUtilities:
 
         sys.stdout.write(f"{label.ljust(10)} | [{bar:{n_bar}s}] {int(100 * j)}% ")
         sys.stdout.flush()
+        sys.stdout.flush()
 
     def clean_up(self):
-        if not os.path.exists(self.sego_home):
+        if os.path.exists(self.sego_home):
             shutil.rmtree(self.sego_home)
 
     def set_home(self):
