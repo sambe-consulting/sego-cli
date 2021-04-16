@@ -1,3 +1,13 @@
+
+#***************************************************************************************************#
+#Title:             Applications DatabaseUtilities                                                  #
+#Description:       Class that defines tables and schema for Applications database                  #
+#Author:            Sambe Development                                                               #
+#***************************************************************************************************#
+
+
+
+
 import os
 import sqlite3
 from pathlib import Path
@@ -12,6 +22,7 @@ from models.application import Applications
 class DatabaseUtilities:
 
     def __init__(self):
+    """Initializes attributes of the class from the sego_database"""
         self.sego_home = Path.home() / ".sego"
         self.database = self.sego_home / "sego_database.db"
         self.config = {
@@ -39,6 +50,7 @@ class DatabaseUtilities:
                 conn.close()
 
     def create_applications_table(self):
+    """Creates a schema table named applications and connects it to the database"""
         with self.schema.connection('sqlite').create('applications') as table:
             table.increments('id')
 
@@ -54,6 +66,7 @@ class DatabaseUtilities:
             table.timestamp("updated_at").nullable()
 
     def create_plugins_table(self):
+    """Creates a table with description of features that can be added to an application"""
         with self.schema.connection('sqlite').create('plugins') as table:
             table.increments('id')
         with self.schema.table('plugins') as table:
@@ -62,6 +75,7 @@ class DatabaseUtilities:
             table.string("version")
 
     def register_application(self, app_data):
+    """Saves details of a new application"""
         new_app = Applications()
         new_app.app_name = app_data["app_name"]
         new_app.description = app_data["description"]
@@ -73,9 +87,11 @@ class DatabaseUtilities:
         new_app.save()
 
     def list_applications(self):
+    """Returns a list of all the applications"""
         return Applications.all()
 
     def setup(self):
+    """Checks if a path to the database is not already stored then adds the information into the applications and plugins table"""
         if not os.path.exists(self.database):
             self.create_connection(str(self.database))
             self.create_applications_table()
