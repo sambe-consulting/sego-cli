@@ -10,6 +10,7 @@ from termcolor import colored
 from models.application import Applications
 from prettytable import PrettyTable
 import getpass
+from orator.exceptions.orm import *
 
 
 class ApplicationUtilities:
@@ -40,7 +41,7 @@ class ApplicationUtilities:
               " use the " + colored("--name",
                                     "yellow") + " flag to specify the application in question.This command only removes\n" \
                                                 " the app from the CLI but does not delete the codebase from the filesystem" \
-                                                "\n to delete the codebase use the " + colored("--clean_up",
+                                                "\n to delete the codebase use the " + colored("--clean-up",
                                                                                                "yellow") + " flag\n " \
                                                                                                            " and set it to true"
 
@@ -159,6 +160,37 @@ class ApplicationUtilities:
             table.add_row(list(row.values()))
 
         print(table)
+
+    def delete(self,kwargs):
+
+        def _delete(app,kwargs):
+            app_dir = str(app.app_directory)+"/"+str(app.app_name)
+            app.delete()
+            if 'clean_up' in kwargs:
+                shutil.rmtree(app_dir)
+
+
+        if 'name' in kwargs:
+            name = kwargs["name"]
+            try:
+                app = Applications.where('app_name','=',name).first_or_fail()
+                _delete(app,kwargs)
+            except ModelNotFound as e:
+                print(colored(e,"red"))
+                sys.exit(colored("Application with name ","red")\
+                         +colored("'"+name+"'","yellow")+colored(" is not found","red"))
+        elif 'id' in kwargs:
+            id = kwargs["id"]
+            try:
+                app = Applications.where('application_identifier','=',id).first_or_fail()
+                _delete(app,kwargs)
+            except ModelNotFound as e:
+                print(colored(e,"red"))
+                sys.exit(colored("Application with id ","red")\
+                         +colored("'"+str(id)+"'","yellow")+colored(" is not found","red"))
+        else:
+            print(colored("Please use --name or --id to choose the application to delete","yellow"))
+
 
     def run(self, task, kwargs):
         if task.lower() in self.tasks:
