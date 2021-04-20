@@ -47,7 +47,7 @@ class ApplicationUtilities:
 
         doc = doc + "\n\n The " + colored("register",
                                           "blue") + " task, registers an application to be managed by  " + colored(
-            "sego-cli", "green")
+            "sego-cli", "green")+" the "+ colored("--app-dir","yellow")+" must be set to the home path of the app"
         doc = doc + "\n\n The " + colored("activate", "blue") + " task, makes an app active, " + colored("sego-cli",
                                                                                                          "green") + " can only " \
                                                                                                                     "work on an active app, use the " + colored(
@@ -130,6 +130,7 @@ class ApplicationUtilities:
             app_data["developer"] = getpass.getuser()
         if not app_data["app_directory"].strip():
             app_data["app_directory"] = str(Path.cwd())
+        app_data["app_directory"] = app_data["app_directory"]+"/"+app_data["app_name"]
         exit_flag2 = True
         while os.path.exists(app_data["app_directory"]+"/"+app_data["app_name"]) and exit_flag2:
             print("The app directory: " + colored(app_data["app_directory"]+"/"+app_data["app_name"], "red") + " already exists")
@@ -190,6 +191,24 @@ class ApplicationUtilities:
                          +colored("'"+str(id)+"'","yellow")+colored(" is not found","red"))
         else:
             print(colored("Please use --name or --id to choose the application to delete","yellow"))
+
+    def register(self,kwargs):
+        print(kwargs)
+        if 'app_dir' in kwargs:
+            to_conf ="app/Configurations/application/sego.json"
+            app_dir = Path(kwargs["app_dir"])
+            conf_path = app_dir / Path(to_conf)
+            if os.path.exists(conf_path):
+                configs = None
+                with open(conf_path,"r") as f:
+                    configs = json.loads(f.read())
+                configs["app_directory"] = str(app_dir)
+                self.db_utils.register_application(configs)
+
+            else:
+                sys.exit(colored("The application must have ","red")+colored(to_conf,"yellow")+colored(" configuration file"))
+        else:
+            print("Please use "+ colored("--app-dir","yellow")+" to specify app")
 
 
     def run(self, task, kwargs):
