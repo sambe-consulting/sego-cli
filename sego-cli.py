@@ -13,14 +13,15 @@ from orator.exceptions.query import QueryException
 class Sego(object):
     def __init__(self):
         self.list_utilities  = ListUtilities()
+        self.application_utilities = ApplicationUtilities()
 
     @doc(ListUtilities().get_list_doc())
     def list(self,target):
         self.list_utilities.run_list(target=target)
 
     @doc(ApplicationUtilities().get_application_doc())
-    def application(self,task):
-        pass
+    def application(self,task,**kwargs):
+        self.application_utilities.run(task=task,kwargs=kwargs)
     
 
 
