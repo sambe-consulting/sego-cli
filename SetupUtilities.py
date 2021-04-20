@@ -70,4 +70,9 @@ class SetupUtilities:
         else:
              subprocess.check_call([sys.executable, "-m", "pip", "install", package])
 
-
+    def virtualenv(self,name,directory):
+        current_working_dir=os.getcwd()
+        os.chdir(directory)
+        subprocess.check_call(["python","-m","virtualenv",name,"--python","python3"])
+        subprocess.check_call([str(directory)+"/"+name+"/bin/pip","install","-r",str(directory/"requirements.txt")])
+        os.chdir(current_working_dir)

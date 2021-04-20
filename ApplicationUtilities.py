@@ -4,6 +4,7 @@ from zipfile import ZipFile
 import uuid, sys
 from datetime import datetime
 from DatabaseUtilities import DatabaseUtilities
+from SetupUtilities import SetupUtilities
 from SegoExceptions import *
 from termcolor import colored
 from models.application import Applications
@@ -15,6 +16,7 @@ class ApplicationUtilities:
     def __init__(self):
         self.app_template_url = "https://codeload.github.com/sambe-consulting/sego-app/zip/refs/heads/master"
         self.db_utils = DatabaseUtilities()
+        self.setup_utils = SetupUtilities()
         self.tasks = ["list", "generate", "delete", "register", "activate"]
 
     def get_application_doc(self):
@@ -97,6 +99,7 @@ class ApplicationUtilities:
         }
         with open(configuration_path, "w") as f:
             json.dump(configurations, f, indent=4)
+        self.setup_utils.virtualenv(name="env",directory=directory/name)
         self.db_utils.register_application(application_data)
 
     def generate(self, kwargs):
@@ -131,7 +134,6 @@ class ApplicationUtilities:
             print("The app directory: " + colored(app_data["app_directory"]+"/"+app_data["app_name"], "red") + " already exists")
             app_data["app_directory"] = input(
             colored("Enter application directory or exit to exit:", "green") + colored("default (" + str(Path.cwd()) + "):"))
-
         self.generate_application(application_data=app_data)
 
     def list(self, kwargs):
