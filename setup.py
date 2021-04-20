@@ -19,8 +19,8 @@ class CustomInstallCommand(install):
     """Customized setuptools install command - prints a friendly greeting."""
 
     def run(self):
-        dbu = DatabaseUtilities()
-        dbu.setup()
+        # dbu = DatabaseUtilities()
+        # dbu.setup()
         install.run(self)
 
 # The directory containing this file
@@ -54,9 +54,6 @@ with open(HERE+'/version.txt') as f:
         cmdclass={
             'install': CustomInstallCommand,
         },
-        entry_points='''
-            [console_scripts]
-            sego-cli=sego_cli.sego:cli
-        '''
+
     )
 # This call to setup() does all the work

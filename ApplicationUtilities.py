@@ -15,6 +15,12 @@ class ApplicationUtilities:
         self.app_template_url = "https://codeload.github.com/sambe-consulting/sego-app/zip/refs/heads/master"
         self.db_utils = DatabaseUtilities()
 
+    def get_application_doc(self):
+        doc = "The "+colored("application","green")+" command manages application level tasks.\n"
+        doc = doc+"  use the "+colored("--task","yellow")+" argument to specify the task\n"
+
+        return doc
+
     def generate_application(self, application_data):
         directory = Path(application_data["app_directory"])
         name = application_data["app_name"]
@@ -68,17 +74,18 @@ class ApplicationUtilities:
                 "description":app_model.description,
                 "developer":app_model.developer,
                 "version":app_model.version,
-                # "app_directory":app_model.app_directory,
                 "application_identifier":app_model.application_identifier,
-                # "application_type":app_model.application_type,
                 "created_at":app_model.created_at.to_datetime_string(),
                 "updated_at":app_model.updated_at.to_datetime_string()
 
             }
         apps = Applications.all().all()
         rows = [decompose(x) for x in apps]
-        # headings = [ "app_name","description","developer","version","app_directory",
-        #         "application_identifier","application_type","created_at", "updated_at"]
+
         headings = [ "app_name","description","developer","version","application_identifier","created_at", "updated_at"]
-        return headings,rows
+        table = PrettyTable(headings)
+        for row in rows:
+           table.add_row(list(row.values()))
+
+        print(table)
 

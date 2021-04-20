@@ -2,7 +2,7 @@ import os
 import sqlite3
 from pathlib import Path
 from sqlite3 import Error
-import sys,shutil
+import sys, shutil
 from orator import DatabaseManager, Schema
 from orator import Model
 
@@ -14,7 +14,7 @@ class DatabaseUtilities:
 
     def __init__(self):
 
-        self.sego_home = Path(".")
+        self.sego_home = Path.home() / ".sego"
         self.database = self.sego_home / "sego_database.db"
         self.config = {
             'sqlite': {
@@ -39,6 +39,9 @@ class DatabaseUtilities:
         finally:
             if conn:
                 conn.close()
+
+    def get_database_path(self):
+        return self.database
 
     def create_applications_table(self):
         with self.schema.connection('sqlite').create('applications') as table:
@@ -90,8 +93,6 @@ class DatabaseUtilities:
         target.description = "This generator target manages applications"
         target.save()
 
-
-
     def register_application(self, app_data):
         new_app = Applications()
         new_app.app_name = app_data["app_name"]
@@ -107,7 +108,7 @@ class DatabaseUtilities:
         return Applications.all()
 
     def setup(self):
-        os.remove(str(self.database))
+
         self.create_connection(str(self.database))
         self.create_applications_table()
         self.create_plugins_table()

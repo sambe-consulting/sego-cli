@@ -40,14 +40,8 @@ class ListUtilities:
             util_module = __import__(util_name)
             util_class = getattr(util_module,util_name)
             util_instance = util_class()
-            headings,rows = util_instance.list()
-            table = PrettyTable(headings)
-            for row in rows:
-                table.add_row(list(row.values()))
+            util_instance.list()
 
-            table.set_style(ORGMODE)
-
-            print(table)
         else:
             print(self.get_list_doc())
 

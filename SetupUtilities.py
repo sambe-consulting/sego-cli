@@ -39,6 +39,9 @@ class SetupUtilities:
         if not os.path.exists(self.sego_home):
             os.mkdir(self.sego_home)
 
+    def get_home_dir(self):
+        return self.sego_home
+
     def setup_database(self):
         self.database_utilities.setup()
 
