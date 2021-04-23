@@ -72,11 +72,10 @@ class ApplicationUtilities:
         with open(download_dir, "wb") as f:
             f.write(r.content)
 
-        self.clean_application(download_dir, directory, name)
+        self.clean_application(download_dir, directory.parent, name)
         self.register_application(application_data)
 
     def clean_application(self, zip, directory, name):
-        print(directory)
         with ZipFile(zip, 'r') as zipObj:
             zipObj.extractall(path=directory)
         os.rename(directory / "sego-app-master", directory / name)
@@ -85,7 +84,7 @@ class ApplicationUtilities:
     def register_application(self, application_data):
         directory = Path(application_data["app_directory"])
         name = Path(application_data["app_name"])
-        configuration_path = directory / name / "app/Configurations/application/sego.json"
+        configuration_path = directory / "app/Configurations/application/sego.json"
         now = datetime.now()
         dt_string = now.strftime("%Y/%m/%d %H:%M:%S")
         application_data["application_identifier"] = str(uuid.uuid4())
@@ -100,7 +99,7 @@ class ApplicationUtilities:
         }
         with open(configuration_path, "w") as f:
             json.dump(configurations, f, indent=4)
-        self.setup_utils.virtualenv(name="env",directory=directory/name)
+        self.setup_utils.virtualenv(name="env",directory=directory)
         self.db_utils.register_application(application_data)
 
     def generate(self, kwargs):
