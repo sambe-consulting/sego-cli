@@ -5,9 +5,8 @@ MAIN_DIR = os.getcwd()
 
 
 def version():
-    with open(MAIN_DIR + "/version.txt", "r") as f:
-        version = f.read()
-    return version
+
+    return '0.1.0.0'
 
 
 def main_docstring():
