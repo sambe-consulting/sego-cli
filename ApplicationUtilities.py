@@ -147,15 +147,15 @@ class ApplicationUtilities:
                 "version": app_model.version,
                 "application_identifier": app_model.application_identifier,
                 "created_at": app_model.created_at.to_datetime_string(),
-                "updated_at": app_model.updated_at.to_datetime_string()
+                # "updated_at": app_model.updated_at.to_datetime_string(),
+                "active":app_model.active
 
             }
 
         apps = Applications.all().all()
         rows = [decompose(x) for x in apps]
 
-        headings = ["app_name", "description", "developer", "version", "application_identifier", "created_at",
-                    "updated_at"]
+        headings = ["app_name", "description", "developer", "version", "application_identifier", "created_at","active"]
         table = PrettyTable(headings)
         for row in rows:
             table.add_row(list(row.values()))
@@ -193,7 +193,6 @@ class ApplicationUtilities:
             print(colored("Please use --name or --id to choose the application to delete","yellow"))
 
     def register(self,kwargs):
-        print(kwargs)
         if 'app_dir' in kwargs:
             to_conf ="app/Configurations/application/sego.json"
             app_dir = Path(kwargs["app_dir"])
@@ -209,6 +208,36 @@ class ApplicationUtilities:
                 sys.exit(colored("The application must have ","red")+colored(to_conf,"yellow")+colored(" configuration file"))
         else:
             print("Please use "+ colored("--app-dir","yellow")+" to specify app")
+
+    def activate(self,kwargs):
+        def _activate(app):
+            all_apps = Applications.all().all()
+            for app_model in all_apps:
+                app_model.active = 0
+                app_model.save()
+            app.active = 1
+            app.save()
+
+        if 'name' in kwargs:
+            name = kwargs["name"]
+            try:
+                app = Applications.where('app_name','=',name).first_or_fail()
+                _activate(app)
+            except ModelNotFound as e:
+                print(colored(e,"red"))
+                sys.exit(colored("Application with name ","red")\
+                         +colored("'"+name+"'","yellow")+colored(" is not found","red"))
+        elif 'id' in kwargs:
+           id = kwargs["id"]
+           try:
+             app = Applications.where('application_identifier','=',id).first_or_fail()
+             _activate(app)
+           except ModelNotFound as e:
+             print(colored(e,"red"))
+             sys.exit(colored("Application with id ","red")\
+                         +colored("'"+str(id)+"'","yellow")+colored(" is not found","red"))
+        else:
+            print(colored("Please use --name or --id to choose the application to activate","yellow"))
 
 
     def run(self, task, kwargs):

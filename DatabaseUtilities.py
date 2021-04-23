@@ -57,6 +57,7 @@ class DatabaseUtilities:
             table.big_integer('application_type').nullable()
             table.timestamp("created_at").nullable()
             table.timestamp("updated_at").nullable()
+            table.big_integer("active").default(0)
 
     def create_plugins_table(self):
         with self.schema.connection('sqlite').create('plugins') as table:
