@@ -86,7 +86,7 @@ jobs:
           name: sego
 
       - name: Adding python shebang
-       run: |
+        run: |
          echo '#!/usr/bin/env python' | cat - sego.pyz > sego
          chmod 775 sego
 
