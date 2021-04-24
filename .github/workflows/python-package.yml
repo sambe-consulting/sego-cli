@@ -85,6 +85,12 @@ jobs:
         with:
           name: sego
 
+     - name: Adding python shebang
+       run: |
+         echo '#!/usr/bin/env python' | cat - sego.pyz > sego
+         chmod 775 sego 
+
+
       - name: Create release
         id: create-new-release
         uses: actions/create-release@v1
@@ -100,8 +106,8 @@ jobs:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
         with:
           upload_url: ${{steps.create-new-release.outputs.upload_url}}
-          asset_path: sego.pyz
-          asset_name: sego.pyz
+          asset_path: sego
+          asset_name: sego
           asset_content_type: application/zip
 
 
