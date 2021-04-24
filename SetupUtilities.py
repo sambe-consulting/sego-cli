@@ -46,15 +46,13 @@ class SetupUtilities:
         self.database_utilities.setup()
 
     def setup_dependencies(self):
-        deps_file = "requirements.txt"
-        deps_paths = self.working_dir/deps_file
-        self.installer(deps_paths,True)
+        deps_file = "https://raw.githubusercontent.com/sambe-consulting/sego-cli/master/requirements.txt"
+        self.installer(deps_file,True)
 
     def setup(self):
         self.printProgressBar(10,"Initializing process",1)
         self.printProgressBar(20,"Setting up Sego cli home directory ~/.sego",2)
         self.set_home()
-        sleep(4)
         self.printProgressBar(40,"Home directory created ",4)
         self.printProgressBar(50,"Initializing dependency installation",2)
         self.printProgressBar(50,"Installing dependencies",3)

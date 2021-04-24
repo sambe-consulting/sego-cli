@@ -116,8 +116,8 @@ class ApplicationUtilities:
             print("The app name: " + colored(app_data["app_name"], "red") + " already exists")
             app_data["app_name"] = input(colored("Enter application name or type exit to exit : ", "green"))
             if app_data["app_name"] == 'exit':
-                print("EXITING !!!")
                 exit_flag = False
+                sys.exit("EXITING !!!")
         app_data["description"] = input(colored("Enter application description: ", "green"))
         app_data["developer"] = input(
             colored("Enter application developer ", "green") + colored("default (" + getpass.getuser() + "):"))
@@ -164,7 +164,7 @@ class ApplicationUtilities:
     def delete(self,kwargs):
 
         def _delete(app,kwargs):
-            app_dir = str(app.app_directory)+"/"+str(app.app_name)
+            app_dir = str(app.app_directory)
             app.delete()
             if 'clean_up' in kwargs:
                 shutil.rmtree(app_dir)

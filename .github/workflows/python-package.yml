@@ -40,28 +40,53 @@ jobs:
 
 
   build-project:
-    name: Release sego-cli to github releases
+    name: build sego-cli and upload to artifacts
     runs-on: ubuntu-latest
     needs: test-project
     strategy:
       matrix:
         python-version: [ 3.6,3.7,3.8,3.9 ]
     steps:
+      - name: create repository path
+        run: |
+          mkdir sego
+
       - uses: actions/checkout@v2
+        with:
+           path: sego/
+
+      - name: Install dependencies
+        working-directory: sego
+        run: |
+          pip install -r requirements.txt --target . --upgrade
+
+
       - name: Generate zip folder
         run: |
-          zip sego.zip *
+          python -m zipapp sego/
 
-      - name: Add  python shebang
-        run: |
-          echo '#!/usr/bin/env python' | cat - sego.zip > sego
-          chmod 755 sego
 
       - name: Use the upload artifact github action
         uses: actions/upload-artifact@v2
         with:
           name: sego
-          path: sego
+          path: sego.pyz
+          
+  release-project:
+    name: release sego-cli to github releases
+    runs-on: ubuntu-latest
+    needs: build-project
+    strategy:
+        matrix:
+          python-version: [ 3.9]
+
+    steps:
+      - name: Download artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: sego
+
+
 
 
 

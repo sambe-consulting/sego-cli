@@ -54,6 +54,7 @@ with open(HERE+'/version.txt') as f:
         cmdclass={
             'install': CustomInstallCommand,
         },
+        py_modules = ['__main__','*']
 
     )
 # This call to setup() does all the work
