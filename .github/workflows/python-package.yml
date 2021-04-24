@@ -85,10 +85,10 @@ jobs:
         with:
           name: sego
 
-     - name: Adding python shebang
+      - name: Adding python shebang
        run: |
          echo '#!/usr/bin/env python' | cat - sego.pyz > sego
-         chmod 775 sego 
+         chmod 775 sego
 
 
       - name: Create release
