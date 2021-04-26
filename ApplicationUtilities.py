@@ -97,9 +97,10 @@ class ApplicationUtilities:
             "updated_at": dt_string,
             "version": application_data["version"]
         }
+        virtual_env_name = application_data["app_name"]+"_env"
         with open(configuration_path, "w") as f:
             json.dump(configurations, f, indent=4)
-        self.setup_utils.virtualenv(name="env",directory=directory)
+        self.setup_utils.virtualenv(name=virtual_env_name,directory=directory)
         self.db_utils.register_application(application_data)
 
     def generate(self, kwargs):
