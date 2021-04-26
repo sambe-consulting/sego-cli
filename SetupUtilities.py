@@ -73,4 +73,5 @@ class SetupUtilities:
         current_working_dir=os.getcwd()
         os.chdir(directory)
         subprocess.check_call(["python","-m","virtualenv",name,"--python","python3"])
+        os.rename(name,"env")
         os.chdir(current_working_dir)
