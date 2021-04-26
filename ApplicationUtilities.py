@@ -142,7 +142,7 @@ class ApplicationUtilities:
         def decompose(app_model):
             return {
                 "app_name": app_model.app_name,
-                "description": app_model.description,
+                # "description": app_model.description,
                 "developer": app_model.developer,
                 "version": app_model.version,
                 "application_identifier": app_model.application_identifier,
@@ -155,7 +155,7 @@ class ApplicationUtilities:
         apps = Applications.all().all()
         rows = [decompose(x) for x in apps]
 
-        headings = ["app_name", "description", "developer", "version", "application_identifier", "created_at","active"]
+        headings = ["app_name", "developer", "version", "application_identifier", "created_at","active"]
         table = PrettyTable(headings)
         for row in rows:
             table.add_row(list(row.values()))
