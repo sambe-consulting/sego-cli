@@ -1,4 +1,5 @@
 import os, shutil,sys
+import time
 from pathlib import Path
 import subprocess
 from termcolor import colored
@@ -67,7 +68,6 @@ class SetupUtilities:
         os.remove(str(download_dir))
         templates_dir = self.sego_home / "templates"
         try:
-            shutil.rmtree(templates_dir)
             os.rename(old_templates,templates_dir)
         except:
             pass
