@@ -4,7 +4,8 @@ import subprocess
 from termcolor import colored
 from DatabaseUtilities import *
 from time import sleep
-
+import requests
+from zipfile import ZipFile
 
 class SetupUtilities:
 
@@ -49,6 +50,31 @@ class SetupUtilities:
         deps_file = "https://raw.githubusercontent.com/sambe-consulting/sego-cli/master/requirements.txt"
         self.installer(deps_file,True)
 
+    def setup_templates(self):
+        template_files = "https://codeload.github.com/sambe-consulting/sego-cli/zip/refs/heads/master"
+
+        r = requests.get(template_files, allow_redirects=True)
+        download_dir = self.sego_home / "template_master"
+        extract_dir = self.sego_home/"extract"
+        old_templates = extract_dir / "sego-cli-master/templates"
+
+        with open(download_dir, "wb") as f:
+            f.write(r.content)
+
+        with ZipFile(download_dir, 'r') as zipObj:
+            zipObj.extractall(path=extract_dir)
+
+        os.remove(str(download_dir))
+        templates_dir = self.sego_home / "templates"
+        try:
+            shutil.rmtree(templates_dir)
+            os.rename(old_templates,templates_dir)
+        except:
+            pass
+        shutil.rmtree(str(extract_dir))
+
+
+
     def setup(self):
         self.printProgressBar(10,"Initializing process",1)
         self.printProgressBar(20,"Setting up Sego cli home directory ~/.sego",2)
@@ -60,7 +86,10 @@ class SetupUtilities:
         self.printProgressBar(70,"All dependencies have been installed",3)
         self.printProgressBar(80,"Initializing database setup",2)
         self.setup_database()
-        self.printProgressBar(100,"Database setup complete",3)
+        self.printProgressBar(90,"Database setup complete",1)
+        self.printProgressBar(91,"Install generator templates",1)
+        self.setup_templates()
+        self.printProgressBar(100,"Templates successfully installed")
 
     def installer(self,package,req_file=False):
         if req_file:
