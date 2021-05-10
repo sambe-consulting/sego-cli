@@ -2,6 +2,7 @@
 import fire
 from DocUtilities import *
 from ApplicationUtilities import *
+from ControllerUtilities import *
 from ListUtilities import *
 from models.targets import Targets
 from termcolor import colored
@@ -13,6 +14,7 @@ class Sego(object):
     def __init__(self):
         self.list_utilities  = ListUtilities()
         self.application_utilities = ApplicationUtilities()
+        self.controller_utilities = ControllerUtilities()
 
     @doc(ListUtilities().get_list_doc())
     def list(self,target):
@@ -21,6 +23,11 @@ class Sego(object):
     @doc(ApplicationUtilities().get_application_doc())
     def application(self,task,**kwargs):
         self.application_utilities.run(task=task,kwargs=kwargs)
+
+    @doc(ControllerUtilities().get_controller_doc())
+    def controller(self,task,**kwargs):
+        self.controller_utilities.run(task=task,kwargs=kwargs)
+
     
 
 
