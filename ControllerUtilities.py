@@ -84,7 +84,7 @@ class ControllerUtilities:
     def list(self, kwargs):
         self.set_active()
         print(colored("*","yellow")*80)
-        print(colored(pyfiglet.figlet_format("--- CONTROLLERS ---"), "green"))
+        print(colored(pyfiglet.figlet_format(""+self.active_app_dict["app_name"]+"  CONTROLLERS "), "green"))
 
         print(colored("=", "yellow") * 80)
 
