@@ -12,17 +12,17 @@ from orator.exceptions.query import QueryException
 @doc(main_docstring())
 class Sego(object):
     def __init__(self):
-        self.list_utilities  = ListUtilities()
-        self.application_utilities = ApplicationUtilities()
-        self.controller_utilities = ControllerUtilities()
+        pass
 
     @doc(ApplicationUtilities().get_application_doc())
     def app(self,task,**kwargs):
-        self.application_utilities.run(task=task,kwargs=kwargs)
+        application_utilities = ApplicationUtilities()
+        application_utilities.run(task=task,kwargs=kwargs)
 
     @doc(ControllerUtilities().get_controller_doc())
     def controller(self,task,**kwargs):
-        self.controller_utilities.run(task=task,kwargs=kwargs)
+        controller_utilities = ControllerUtilities()
+        controller_utilities.run(task=task,kwargs=kwargs)
 
     
 
