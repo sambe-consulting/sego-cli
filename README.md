@@ -16,13 +16,7 @@
 ## About Sego-cli
 The command line interface for the sego framework, is a helper tool that assists you while building your web application, or micro-service topology,
 RESTful API, distributed compute task manager, functions as a service and other of <a href="https://github.com/sambe-consulting/sego">Sego</a>'s subsystems.
-To list the available commands use the `list` command:
 
-```
-sego list 
-```
-Every command also includes a "help" screen which displays and describes the command's available arguments and options. To view a help screen, precede the name of the command with help:
-```
-sego help generate
-```
-The rest of the documentation is available <a href="https://github.com/sambe-consulting/sego">here</a>
+1. <a href="documentation/installation.md">Installation Instructions</a>
+2. <a href="documentation/getting-started.md">Getting Started</a>
+
