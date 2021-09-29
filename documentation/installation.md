@@ -44,7 +44,11 @@ sudo chmod +x sego
 sudo mv sego /usr/local/bin/sego 
 ```
 
-5. Test the CLI :
+5. Setup the environment :
+```bash
+ sego --install 
+```
+6. Test the CLI :
 ```bash
  sego --help  
 ```
@@ -87,7 +91,11 @@ sudo chmod +x sego
 sudo mv sego /usr/local/bin/sego 
 ```
 
-5. Test the CLI :
+5. Setup the environment :
+```bash
+ sego --install 
+```
+6. Test the CLI :
 ```bash
  sego --help  
 ```
