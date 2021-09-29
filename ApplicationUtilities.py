@@ -23,7 +23,7 @@ class ApplicationUtilities:
         self.tasks = ["list", "generate", "delete", "register", "activate", "describe"]
 
     def get_application_doc(self):
-        doc = "The " + colored("application", "green") + " command manages application level tasks.\n"
+        doc = "The " + colored("app", "green") + " command manages application level tasks.\n"
         task_list = []
         for task in self.tasks:
             task_list.append(colored(task, "blue"))

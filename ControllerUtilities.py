@@ -1,17 +1,15 @@
 from termcolor import colored
 from models.application import Applications
 from orator.exceptions.orm import *
-import sys, os,inspect
+import sys, os, inspect
 from pathlib import Path
 from contextlib import contextmanager
 import importlib
 from uuid import uuid4
 import pyfiglet
-import io
 import getpass
 from CodeGenerationUtilities import CodeGenerationUtilities
 from datetime import datetime
-
 
 
 class ControllerUtilities:
@@ -25,7 +23,7 @@ class ControllerUtilities:
         doc = "The " + colored("controller", "green") + " command manages controller level tasks." \
                                                         " set the " + colored("--task",
                                                                               "yellow") + " argument to %s|%s|%s" % (
-              colored("list", "blue"), colored("generate", "blue"), colored("delete", "blue"))
+                  colored("list", "blue"), colored("generate", "blue"), colored("delete", "blue"))
         doc = doc + "\n\n The " + colored("list", "blue") + " task lists all controllers for the active application "
         doc = doc + "\n\n The " + colored("generate",
                                           "blue") + " task generates a new controller for the active application "
@@ -51,7 +49,7 @@ class ControllerUtilities:
             spec.loader.exec_module(module)
             return module
 
-    def cleanup(self,path, newpath):
+    def cleanup(self, path, newpath):
         bad_words = ['import']
         with open(path) as oldfile, open(newpath, 'w') as newfile:
             for line in oldfile:
@@ -83,35 +81,37 @@ class ControllerUtilities:
 
     def list(self, kwargs):
         self.set_active()
-        print(colored("*","yellow")*80)
-        print(colored(pyfiglet.figlet_format(""+self.active_app_dict["app_name"]+"  CONTROLLERS "), "green"))
+        print(colored("*", "yellow") * 80)
+        print(colored(pyfiglet.figlet_format("" + self.active_app_dict["app_name"] + "  CONTROLLERS "), "green"))
 
         print(colored("=", "yellow") * 80)
 
         for file in self.all_files:
-            new_name = str(uuid4())+".py"
-            self.cleanup(file,new_name)
+            new_name = str(uuid4()) + ".py"
+            self.cleanup(file, new_name)
             module = self.path_import(new_name)
-            for name,obj in inspect.getmembers(module):
+            for name, obj in inspect.getmembers(module):
                 try:
                     if inspect.isclass(obj):
                         self.known_controllers.append(name)
-                        print(colored("CONTROLLER NAME: ","green")+" "+colored(name,"blue"))
-                        functions = inspect.getmembers(obj,predicate=inspect.isfunction)
-                        for function_name,function in functions:
+                        print(colored("CONTROLLER NAME: ", "green") + " " + colored(name, "blue"))
+                        functions = inspect.getmembers(obj, predicate=inspect.isfunction)
+                        for function_name, function in functions:
                             # print(function)
-                            print(colored("---","yellow")+" "+colored("ACTION NAME: ","green")," "+colored(function_name,"blue"))
+                            print(colored("---", "yellow") + " " + colored("ACTION NAME: ", "green"),
+                                  " " + colored(function_name, "blue"))
                             arguments = inspect.getfullargspec(function)[0]
                             for arg in arguments:
                                 if arg != 'self':
-                                    print(colored("--- --- ---","yellow")+" "+colored("ARGUMENT NAME: ","green")," "+colored(arg,"blue"))
+                                    print(colored("--- --- ---", "yellow") + " " + colored("ARGUMENT NAME: ", "green"),
+                                          " " + colored(arg, "blue"))
                 except:
                     pass
-            print(colored("=","yellow")*80)
+            print(colored("=", "yellow") * 80)
 
             os.remove(new_name)
         print("\n")
-        print(colored("*","yellow")*80)
+        print(colored("*", "yellow") * 80)
 
     def generate(self, kwargs):
         save_stdout = sys.stdout
@@ -120,29 +120,31 @@ class ControllerUtilities:
         sys.stdout = save_stdout
 
         ctrl_data = {}
-        controller_path = Path(self.active_app_dict["app_directory"])/"app/Controllers"
+        controller_path = Path(self.active_app_dict["app_directory"]) / "app/Controllers"
         print(controller_path)
         exit_flag = True
-        ctrl_data["name"] = input(colored("Please enter controller name ","green")+colored("e.g HomeController : ","yellow"))
+        ctrl_data["name"] = input(
+            colored("Please enter controller name ", "green") + colored("e.g HomeController : ", "yellow"))
         while ctrl_data["name"] in self.known_controllers and exit_flag:
             print("The controller name: " + colored(ctrl_data["name"], "red") + " already exists")
             ctrl_data["name"] = input(colored("Enter controller name or type exit to exit : ", "green"))
             if ctrl_data["name"] == 'exit':
                 exit_flag = False
                 sys.exit("EXITING !!!")
-        ctrl_data["controller_description"] = input(colored("Please enter a short description of the controller:","green"))
-        ctrl_data["author"] =  input(
+        ctrl_data["controller_description"] = input(
+            colored("Please enter a short description of the controller:", "green"))
+        ctrl_data["author"] = input(
             colored("Enter controller author ", "green") + colored("default (" + getpass.getuser() + "):"))
-        ctrl_data["author_email"] = input(colored("Enter the email address of the author/maintainer: ","green"))
-        ctrl_data["version"] = input(colored("Enter the version of this controller: ","green"))
+        ctrl_data["author_email"] = input(colored("Enter the email address of the author/maintainer: ", "green"))
+        ctrl_data["version"] = input(colored("Enter the version of this controller: ", "green"))
         ctrl_data["controller_title"] = ctrl_data["name"]
         ctrl_data["controller_name"] = ctrl_data["name"]
         now = datetime.now()
         ctrl_data["generation_date"] = str(now.strftime("%d/%m/%Y %H:%M:%S"))
-        results = self.code_generator.generate('controller.tpl',ctrl_data)
-        filename =ctrl_data["name"]+".py"
-        controller_file = controller_path/filename
-        with open(controller_file,"w") as f:
+        results = self.code_generator.generate('controller.tpl', ctrl_data)
+        filename = ctrl_data["name"] + ".py"
+        controller_file = controller_path / filename
+        with open(controller_file, "w") as f:
             f.write(results)
         print(results)
 
