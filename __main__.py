@@ -16,12 +16,8 @@ class Sego(object):
         self.application_utilities = ApplicationUtilities()
         self.controller_utilities = ControllerUtilities()
 
-    @doc(ListUtilities().get_list_doc())
-    def list(self,target):
-        self.list_utilities.run_list(target=target)
-
     @doc(ApplicationUtilities().get_application_doc())
-    def application(self,task,**kwargs):
+    def app(self,task,**kwargs):
         self.application_utilities.run(task=task,kwargs=kwargs)
 
     @doc(ControllerUtilities().get_controller_doc())
