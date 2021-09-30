@@ -16,8 +16,8 @@
 
 ## Installation instructions 
 
-### Windows 
-1. Set version number, go <a href="https://github.com/sambe-consulting/sego-cli/releases">here<a/> for all available versions e.g for `v5`
+### Windows
+2. Set version number, go <a href="https://github.com/sambe-consulting/sego-cli/releases">here<a/> for all available versions e.g for `v5`
 ```bash 
 SET SEGO_VERSION=v5  
 ```
@@ -33,25 +33,33 @@ SET SEGO_VERSION=%temp_var: =%
 ```
 2. Download the CLI:
 ```bash
-curl https://github.com/sambe-consulting/sego-cli/releases/download/%SEGO_VERSION%/sego -Lo sego
+curl https://github.com/sambe-consulting/sego-cli/releases/download/%SEGO_VERSION%/sego -Lo sego.py
 ```
-3. Make the CLI executable:
+3. Create a batch file
+- Open a text editor 
+- Add the following code
+```bash
+@echo off 
+
+"python" "C:\<path where sego.py is saved>\sego.py" %*
+ 
+```
+e.g 
 
 ```bash
-sudo chmod +x sego 
+@echo off 
+
+"python" "C:\Users\Kabelo\sego.py"
+
 ```
 
-4. Move the CLI to the bin directory
+- Save the batch file in `C:\Windows\System32` as `sego.bat`
 
-```bash
-sudo mv sego /usr/local/bin/sego 
-```
-
-5. Setup the environment :
+4. Setup the environment :
 ```bash
  sego --install 
 ```
-6. Test the CLI :
+5. Test the CLI :
 ```bash
  sego --help  
 ```
