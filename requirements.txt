@@ -35,3 +35,4 @@ wcwidth==0.2.5
 wrapt==1.12.1
 zipp==3.4.1
 pyfiglet==0.8.post1
+virtualenv
