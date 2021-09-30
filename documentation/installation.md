@@ -17,7 +17,7 @@
 ## Installation instructions 
 
 ### Windows
-2. Set version number, go <a href="https://github.com/sambe-consulting/sego-cli/releases">here<a/> for all available versions e.g for `v5`
+1. Set version number, go <a href="https://github.com/sambe-consulting/sego-cli/releases">here<a/> for all available versions e.g for `v5`
 ```bash 
 SET SEGO_VERSION=v5  
 ```
