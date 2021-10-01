@@ -36,6 +36,7 @@ The use of the **--task** argument is optional, the **app** command handles the 
 
 ## Command tasks 
 <h3 id="app-list">List Command</h3>
+
 The **list** task lists all applications registered into **sego-cli**
 
 ### Usage 
