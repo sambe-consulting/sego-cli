@@ -127,6 +127,7 @@ or
 $sego app delete --id 0f99edc3-0125-47ac-a5a5-a724103bcbb7  --clean-up =true 
 ```
 <h3 id="app-activate">Activate Command</h3>
+
 The **activate** task, makes an app active, sego-cli can only work on an active app, use the **--name** or **--id** to activate an app. This means to operate on 
 a specific app using the CLI it has to be active. 
 
