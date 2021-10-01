@@ -67,11 +67,42 @@ sego app list
 +-----------+---------------------------------------------+---------+--------------------------------------+---------------------+--------+
 ```
 
+<h3 id="app-generate">Generate Command</h3>
+
+The **generate** task generates a new application e.g: 
+```bash
+sego app --task generate
+```
+You will be prompted for:
+1. **application name** : This is the name of the application, this must be unique within the same sego installation, the name is used to run further operations on the application created
+2. **application description** : This is a short summary of what the application is for or what it does. 
+3. **application developer**: This is the name of the developer building the application, this value will default to the system username: 
+4. **application version** : This is the version of the application 
+5. **application directory** : This is the directory at which the application will be installed. This value defaults to the current directory. This 
+   If you move your application you must update this value.
+
+To create a new application named `new-blog`, the following steps can be followed:
+
+```bash
+$sego app generate 
+Enter application name: new-blog
+Enter application description: This is my new blog
+Enter application developer default (kabelo):kabelo masemola
+Enter application version: 1.0.0
+Enter application directory default (/home/kabelo/workspace/open_source/sego-cli):
+created virtual environment CPython3.6.9.final.0-64 in 297ms
+  creator CPython3Posix(dest=/home/kabelo/workspace/open_source/sego-cli/new-blog/new-blog_env, clear=False, no_vcs_ignore=False, global=False)
+  seeder FromAppData(download=False, pip=bundle, setuptools=bundle, wheel=bundle, via=copy, app_data_dir=/home/kabelo/.local/share/virtualenv)
+    added seed packages: pip==21.2.4, setuptools==57.4.0, wheel==0.37.0
+  activators BashActivator,CShellActivator,FishActivator,PowerShellActivator,PythonActivator,XonshActivator
 
 
+```
+After the generation of the application code a virtual environment is create using this naming convention `` <app-name>_env``, for ``new-blog`` the environment
+will be appropriately named ``new-blog_env``
 
+After generating a sego application go <a href="app-setup.md">here</a> to see what to do next.
 
-<h3 id="app-list">List Command</h3>
 <h3 id="app-list">List Command</h3>
 <h3 id="app-list">List Command</h3>
 <h3 id="app-list">List Command</h3>

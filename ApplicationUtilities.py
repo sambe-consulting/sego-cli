@@ -33,10 +33,9 @@ class ApplicationUtilities:
 
         doc = doc + "\n\n\n\n The " + colored("list", "blue") + " task lists all applications registered into " + \
               colored("sego-cli", "green")
-        doc = doc + "\n\n The " + colored("generate", "blue") + " task generates a new application, to use add the " + \
-              colored("--name", "yellow") + " flag. e.g python -m " + colored("sego-cli",
-                                                                              "green") + " application" + " " + \
-              colored("--task", "yellow") + " generate --name blog"
+        doc = doc + "\n\n The " + colored("generate", "blue") + " task generates a new application" + \
+             " e.g " + colored("sego",    "green") + " app" + " " + \
+              colored("--task", "yellow") + " generate"
 
         doc = doc + "\n\n The " + colored("delete", "blue") + " task deletes an application from " + colored("sego-cli",
                                                                                                              "green") + \
