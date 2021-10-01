@@ -98,11 +98,125 @@ created virtual environment CPython3.6.9.final.0-64 in 297ms
 
 
 ```
-After the generation of the application code a virtual environment is create using this naming convention `` <app-name>_env``, for ``new-blog`` the environment
+After the generation of the application code a virtual environment is created using this naming convention `` <app-name>_env``, for ``new-blog`` the environment
 will be appropriately named ``new-blog_env``
 
 After generating a sego application go <a href="app-setup.md">here</a> to see what to do next.
 
-<h3 id="app-list">List Command</h3>
-<h3 id="app-list">List Command</h3>
-<h3 id="app-list">List Command</h3>
+<h3 id="app-delete">Delete Command</h3>
+
+The **delete** task deletes an application from sego-cli's internal database, use the **--name** or **--id** flag to specify the application in question.
+This command only removes the app from the CLI but does not delete the codebase from the filesystem to delete the codebase use the **--clean-up** flag
+and set it to true.
+
+To delete an application named ``new-blog`` we can run from the CLI :
+
+```bash
+$sego app delete --name new-blog 
+```
+or 
+```bash
+$sego app delete --id 0f99edc3-0125-47ac-a5a5-a724103bcbb7 
+```
+To delete the same application and remove the codebase from the filesystem:
+```bash
+$sego app delete --name new-blog --clean-up =true 
+```
+or 
+```bash
+$sego app delete --id 0f99edc3-0125-47ac-a5a5-a724103bcbb7  --clean-up =true 
+```
+<h3 id="app-activate">Activate Command</h3>
+The **activate** task, makes an app active, sego-cli can only work on an active app, use the **--name** or **--id** to activate an app. This means to operate on 
+a specific app using the CLI it has to be active. 
+
+To illustrate how the command works lets: 
+1. list all applications:
+
+```bash
+$ sego app list
++-----------+---------------------------------------------+---------+--------------------------------------+---------------------+--------+
+|  app_name |                  developer                  | version |        application_identifier        |      created_at     | active |
++-----------+---------------------------------------------+---------+--------------------------------------+---------------------+--------+
+|   guitar  |                    kabelo                   |  0.1.0  | 95e75792-ea8a-42a5-a4ca-d658b63fd9ac | 2021-05-09 21:59:55 |   0    |
+|    car    |                    kabelo                   |   1.0   | d2fd5dc1-fea2-4d35-b23a-7d029b572c42 | 2021-05-09 22:35:05 |   0    |
+|   portal  | kabelo masemola <kabelo.masemola@rmb.co.za> |  0.1.0  | 7307c469-1398-4b34-a6f5-f40876150d0b | 2021-05-11 00:00:20 |   0    |
+|    Blog   |                    kabelo                   |  1.0.0  | 8f713dd1-318f-4635-903f-fa88f6acdd24 | 2021-07-08 14:13:49 |   0    |
+|    demo   |                    kabelo                   |  1.0.0  | 02f4e21d-1dff-494f-8d29-b9f8218a6760 | 2021-07-26 14:06:17 |   0    |
+|   joker   |               kabelo masemola               |  1.0.0  | 8a32ab84-a1a4-46fb-833e-9e21bd33def1 | 2021-07-30 01:18:46 |   0    |
+|  medisync |                    kabelo                   |  1.0.0  | ab272f35-409e-494e-b602-b5f79529d547 | 2021-08-01 01:24:42 |   0    |
+|  backend  |                    kabelo                   |  0.0.1  | 98221f8e-8117-4320-8af5-9d627914aaec | 2021-08-21 22:24:04 |   1    |
+| test_sego |                    kabelo                   |         | 3abc2126-3129-4ae0-acb8-a2140a703a54 | 2021-09-03 02:07:37 |   0    |
+|    exp2   |                    kabelo                   |         | 0f99edc3-0125-47ac-a5a5-a724103bcbb7 | 2021-09-22 16:54:31 |   0    |
++-----------+---------------------------------------------+---------+--------------------------------------+---------------------+--------+
+
+```
+2. Check the column labelled `active`, you will notice that all entries have the value of `0/False` and only an application named `backend` has a state of 
+`1/True`. 
+3. To activate an application named `demo`, we run:
+
+```bash
+sego app activate --name demo 
+```
+or 
+
+```bash 
+sego app activate --id 02f4e21d-1dff-494f-8d29-b9f8218a6760
+```
+
+4. list all applications: 
+
+```bash
++-----------+---------------------------------------------+---------+--------------------------------------+---------------------+--------+
+|  app_name |                  developer                  | version |        application_identifier        |      created_at     | active |
++-----------+---------------------------------------------+---------+--------------------------------------+---------------------+--------+
+|   guitar  |                    kabelo                   |  0.1.0  | 95e75792-ea8a-42a5-a4ca-d658b63fd9ac | 2021-05-09 21:59:55 |   0    |
+|    car    |                    kabelo                   |   1.0   | d2fd5dc1-fea2-4d35-b23a-7d029b572c42 | 2021-05-09 22:35:05 |   0    |
+|   portal  | kabelo masemola <kabelo.masemola@rmb.co.za> |  0.1.0  | 7307c469-1398-4b34-a6f5-f40876150d0b | 2021-05-11 00:00:20 |   0    |
+|    Blog   |                    kabelo                   |  1.0.0  | 8f713dd1-318f-4635-903f-fa88f6acdd24 | 2021-07-08 14:13:49 |   0    |
+|    demo   |                    kabelo                   |  1.0.0  | 02f4e21d-1dff-494f-8d29-b9f8218a6760 | 2021-07-26 14:06:17 |   1    |
+|   joker   |               kabelo masemola               |  1.0.0  | 8a32ab84-a1a4-46fb-833e-9e21bd33def1 | 2021-07-30 01:18:46 |   0    |
+|  medisync |                    kabelo                   |  1.0.0  | ab272f35-409e-494e-b602-b5f79529d547 | 2021-08-01 01:24:42 |   0    |
+|  backend  |                    kabelo                   |  0.0.1  | 98221f8e-8117-4320-8af5-9d627914aaec | 2021-08-21 22:24:04 |   0    |
+| test_sego |                    kabelo                   |         | 3abc2126-3129-4ae0-acb8-a2140a703a54 | 2021-09-03 02:07:37 |   0    |
+|    exp2   |                    kabelo                   |         | 0f99edc3-0125-47ac-a5a5-a724103bcbb7 | 2021-09-22 16:54:31 |   0    |
++-----------+---------------------------------------------+---------+--------------------------------------+---------------------+--------+
+
+```
+5. Check the column labelled `active`, you will notice that all entries have the value of `0/False` and only an application named `demo` has a state of 
+`1/True`. This means any operation on an application's component/subsystem will be on `demo`.
+
+<h3 id="app-describe">Describe Command</h3>
+
+ The **describe** task, gives configuration information for a particular application, use the **--name** or **--id** flag to specify 
+ the application in question. To describe `demo`
+
+```bash
+sego app describe --name demo
+
+                         _                                          
+                      __| | ___ _ __ ___   ___                      
+ _____ _____ _____   / _` |/ _ \ '_ ` _ \ / _ \   _____ _____ _____ 
+|_____|_____|_____| | (_| |  __/ | | | | | (_) | |_____|_____|_____|
+                     \__,_|\___|_| |_| |_|\___/                     
+                                                                    
+
+APPLICATION NAME: demo
+APPLICATION DESCRIPTION: this is a demo
+APPLICATION DEVELOPER: kabelo
+APPLICATION SOURCE DIRECTORY: /home/kabelo/demo
+APPLICATION IDENTIFIER: 02f4e21d-1dff-494f-8d29-b9f8218a6760
+APPLICATION VERSION: 1.0.0
+APPLICATION TYPE: 1
+APPLICATION CREATION DATE: 2021-07-26T14:06:17.504282+00:00
+APPLICATION ACTIVE STATUS: 1
+
+                        _                                         
+__/\____/\____/\__   __| | ___ _ __ ___   ___   __/\____/\____/\__
+\    /\    /\    /  / _` |/ _ \ '_ ` _ \ / _ \  \    /\    /\    /
+/_  _\/_  _\/_  _\ | (_| |  __/ | | | | | (_) | /_  _\/_  _\/_  _\
+  \/    \/    \/    \__,_|\___|_| |_| |_|\___/    \/    \/    \/  
+                                                                  
+```
+
+
