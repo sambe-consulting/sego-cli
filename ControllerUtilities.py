@@ -149,7 +149,23 @@ class ControllerUtilities:
         print(results)
 
     def delete(self, kwargs):
-        pass
+        save_stdout = sys.stdout
+        sys.stdout = open('trash', 'w')
+        self.list(kwargs)
+        sys.stdout = save_stdout
+        controller_path = Path(self.active_app_dict["app_directory"]) / "app/Controllers"
+        if 'name' in kwargs and isinstance(kwargs['name'],str):
+            filename = kwargs["name"] + ".py"
+            controller_file = controller_path / filename
+            if  os.path.exists(controller_file):
+                os.remove(controller_file)
+            else:
+                print(colored("Controller with name ", "red") + colored(str(kwargs['name']),"yellow") +colored(" does not exist!!","red"))
+        else:
+            print(colored("Please use --name  to choose the controller to delete", "yellow"))
+
+
+
 
     def run(self, task, kwargs):
         if task.lower() in self.tasks:

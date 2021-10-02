@@ -219,13 +219,12 @@ class ApplicationUtilities:
             print("Please use " + colored("--app-dir", "yellow") + " to specify app")
 
     def activate(self, kwargs):
-        print("sssddddddddddddddddddddddddd")
-        import sys
         def _activate(app):
             all_apps = Applications.all().all()
             for app_model in all_apps:
-                app_model.active = 0
-                app_model.save()
+                if app_model.app_name != app.app_name:
+                    app_model.active = 0
+                    app_model.save()
             app.active = 1
             app.save()
 

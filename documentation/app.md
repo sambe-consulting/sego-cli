@@ -126,6 +126,75 @@ or
 ```bash
 $sego app delete --id 0f99edc3-0125-47ac-a5a5-a724103bcbb7  --clean-up =true 
 ```
+<h3 id="app-register">Register Command</h3>
+ The **register** task, registers an application to be managed by  sego-cli the **--app-dir**
+must be set to the home path of the app. This can reverse the effects of the **delete** command so long the **--clean-up** flag was not set.
+To show the workings of the **register** task lets:
+1. List all applications:
+```bash
+sego app list 
++-----------+---------------------------------------------+---------+--------------------------------------+---------------------+--------+
+|  app_name |                  developer                  | version |        application_identifier        |      created_at     | active |
++-----------+---------------------------------------------+---------+--------------------------------------+---------------------+--------+
+|   guitar  |                    kabelo                   |  0.1.0  | 95e75792-ea8a-42a5-a4ca-d658b63fd9ac | 2021-05-09 21:59:55 |   0    |
+|    car    |                    kabelo                   |   1.0   | d2fd5dc1-fea2-4d35-b23a-7d029b572c42 | 2021-05-09 22:35:05 |   0    |
+|   portal  | kabelo masemola <kabelo.masemola@rmb.co.za> |  0.1.0  | 7307c469-1398-4b34-a6f5-f40876150d0b | 2021-05-11 00:00:20 |   0    |
+|    Blog   |                    kabelo                   |  1.0.0  | 8f713dd1-318f-4635-903f-fa88f6acdd24 | 2021-07-08 14:13:49 |   0    |
+|    demo   |                    kabelo                   |  1.0.0  | 02f4e21d-1dff-494f-8d29-b9f8218a6760 | 2021-07-26 14:06:17 |   1    |
+|   joker   |               kabelo masemola               |  1.0.0  | 8a32ab84-a1a4-46fb-833e-9e21bd33def1 | 2021-07-30 01:18:46 |   0    |
+|  medisync |                    kabelo                   |  1.0.0  | ab272f35-409e-494e-b602-b5f79529d547 | 2021-08-01 01:24:42 |   0    |
+|  backend  |                    kabelo                   |  0.0.1  | 98221f8e-8117-4320-8af5-9d627914aaec | 2021-08-21 22:24:04 |   0    |
+| test_sego |                    kabelo                   |         | 3abc2126-3129-4ae0-acb8-a2140a703a54 | 2021-09-03 02:07:37 |   0    |
+|    exp2   |                    kabelo                   |         | 0f99edc3-0125-47ac-a5a5-a724103bcbb7 | 2021-09-22 16:54:31 |   0    |
++-----------+---------------------------------------------+---------+--------------------------------------+---------------------+--------+
+```
+2. Lets delete the `guitar` application 
+```bash
+sego app delete --name guitar  
+```
+3. List all the applications again; notice that `guitar` is not on the list 
+```bash
++-----------+---------------------------------------------+---------+--------------------------------------+---------------------+--------+
+|  app_name |                  developer                  | version |        application_identifier        |      created_at     | active |
++-----------+---------------------------------------------+---------+--------------------------------------+---------------------+--------+
+|    car    |                    kabelo                   |   1.0   | d2fd5dc1-fea2-4d35-b23a-7d029b572c42 | 2021-05-09 22:35:05 |   0    |
+|   portal  | kabelo masemola <kabelo.masemola@rmb.co.za> |  0.1.0  | 7307c469-1398-4b34-a6f5-f40876150d0b | 2021-05-11 00:00:20 |   0    |
+|    Blog   |                    kabelo                   |  1.0.0  | 8f713dd1-318f-4635-903f-fa88f6acdd24 | 2021-07-08 14:13:49 |   0    |
+|    demo   |                    kabelo                   |  1.0.0  | 02f4e21d-1dff-494f-8d29-b9f8218a6760 | 2021-07-26 14:06:17 |   1    |
+|   joker   |               kabelo masemola               |  1.0.0  | 8a32ab84-a1a4-46fb-833e-9e21bd33def1 | 2021-07-30 01:18:46 |   0    |
+|  medisync |                    kabelo                   |  1.0.0  | ab272f35-409e-494e-b602-b5f79529d547 | 2021-08-01 01:24:42 |   0    |
+|  backend  |                    kabelo                   |  0.0.1  | 98221f8e-8117-4320-8af5-9d627914aaec | 2021-08-21 22:24:04 |   0    |
+| test_sego |                    kabelo                   |         | 3abc2126-3129-4ae0-acb8-a2140a703a54 | 2021-09-03 02:07:37 |   0    |
+|    exp2   |                    kabelo                   |         | 0f99edc3-0125-47ac-a5a5-a724103bcbb7 | 2021-09-22 16:54:31 |   0    |
++-----------+---------------------------------------------+---------+--------------------------------------+---------------------+--------+ 
+
+```
+4. Register guitar 
+
+```bash
+sego app register --app-dir=guitar 
+```
+
+5. List all applications again; notice that the `guitar` application is back on the list 
+```bash
++-----------+---------------------------------------------+---------+--------------------------------------+---------------------+--------+
+|  app_name |                  developer                  | version |        application_identifier        |      created_at     | active |
++-----------+---------------------------------------------+---------+--------------------------------------+---------------------+--------+
+|    car    |                    kabelo                   |   1.0   | d2fd5dc1-fea2-4d35-b23a-7d029b572c42 | 2021-05-09 22:35:05 |   0    |
+|   portal  | kabelo masemola <kabelo.masemola@rmb.co.za> |  0.1.0  | 7307c469-1398-4b34-a6f5-f40876150d0b | 2021-05-11 00:00:20 |   0    |
+|    Blog   |                    kabelo                   |  1.0.0  | 8f713dd1-318f-4635-903f-fa88f6acdd24 | 2021-07-08 14:13:49 |   0    |
+|    demo   |                    kabelo                   |  1.0.0  | 02f4e21d-1dff-494f-8d29-b9f8218a6760 | 2021-07-26 14:06:17 |   1    |
+|   joker   |               kabelo masemola               |  1.0.0  | 8a32ab84-a1a4-46fb-833e-9e21bd33def1 | 2021-07-30 01:18:46 |   0    |
+|  medisync |                    kabelo                   |  1.0.0  | ab272f35-409e-494e-b602-b5f79529d547 | 2021-08-01 01:24:42 |   0    |
+|  backend  |                    kabelo                   |  0.0.1  | 98221f8e-8117-4320-8af5-9d627914aaec | 2021-08-21 22:24:04 |   0    |
+| test_sego |                    kabelo                   |         | 3abc2126-3129-4ae0-acb8-a2140a703a54 | 2021-09-03 02:07:37 |   0    |
+|    exp2   |                    kabelo                   |         | 0f99edc3-0125-47ac-a5a5-a724103bcbb7 | 2021-09-22 16:54:31 |   0    |
+|   guitar  |                    kabelo                   |  0.1.0  | 95e75792-ea8a-42a5-a4ca-d658b63fd9ac | 2021-10-02 00:32:10 |   0    |
++-----------+---------------------------------------------+---------+--------------------------------------+---------------------+--------+
+ 
+```
+
+The **register** sub-command is useful in scenarios where you have collaborators this allows everyone to be able to manage the app development locally with th sego-cli
 <h3 id="app-activate">Activate Command</h3>
 
 The **activate** task, makes an app active, sego-cli can only work on an active app, use the **--name** or **--id** to activate an app. This means to operate on 
