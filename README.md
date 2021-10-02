@@ -14,7 +14,7 @@
 </p>
 
 <h2 id="heading"> About Sego CLI </h2>
-The command line interface for the sego framework, is a helper tool that assists you while building your web application, or micro-service topology,
+The command line interface for the sego framework, is a helper tool that assists you while building your web application, micro-service topology,
 RESTful API, distributed compute task manager, functions as a service and other of <a href="https://github.com/sambe-consulting/sego">Sego</a>'s subsystems.
 
 1. <a href="documentation/installation.md">Installation Instructions</a>
