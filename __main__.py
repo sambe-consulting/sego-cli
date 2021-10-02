@@ -24,9 +24,6 @@ class Sego(object):
         controller_utilities = ControllerUtilities()
         controller_utilities.run(task=task,kwargs=kwargs)
 
-    
-
-
 
 if __name__ == '__main__':
     setup_utils = SetupUtilities()
