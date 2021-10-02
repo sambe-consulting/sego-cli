@@ -33,15 +33,15 @@ class ApplicationUtilities:
 
         doc = doc + "\n\n\n\n The " + colored("list", "blue") + " task lists all applications registered into " + \
               colored("sego-cli", "green")
-        doc = doc + "\n\n The " + colored("generate", "blue") + " task generates a new application, to use add the " + \
-              colored("--name", "yellow") + " flag. e.g python -m " + colored("sego-cli",
-                                                                              "green") + " application" + " " + \
-              colored("--task", "yellow") + " generate --name blog"
+        doc = doc + "\n\n The " + colored("generate", "blue") + " task generates a new application" + \
+             " e.g " + colored("sego",    "green") + " app" + " " + \
+              colored("--task", "yellow") + " generate"
 
         doc = doc + "\n\n The " + colored("delete", "blue") + " task deletes an application from " + colored("sego-cli",
                                                                                                              "green") + \
-              " use the " + colored("--name",
-                                    "yellow") + " flag to specify the application in question.This command only removes\n" \
+              "'s internal database, use the " + colored("--name",
+                                    "yellow") +" or "+colored("--id",
+                                    "yellow") +" flag to specify the application in question.This command only removes\n" \
                                                 " the app from the CLI but does not delete the codebase from the filesystem" \
                                                 "\n to delete the codebase use the " + colored("--clean-up",
                                                                                                "yellow") + " flag\n " \
@@ -222,8 +222,9 @@ class ApplicationUtilities:
         def _activate(app):
             all_apps = Applications.all().all()
             for app_model in all_apps:
-                app_model.active = 0
-                app_model.save()
+                if app_model.app_name != app.app_name:
+                    app_model.active = 0
+                    app_model.save()
             app.active = 1
             app.save()
 
@@ -238,6 +239,8 @@ class ApplicationUtilities:
                          + colored("'" + name + "'", "yellow") + colored(" is not found", "red"))
         elif 'id' in kwargs:
             id = kwargs["id"]
+            app = Applications.where('application_identifier', '=', id).first_or_fail()
+            print(app)
             try:
                 app = Applications.where('application_identifier', '=', id).first_or_fail()
                 _activate(app)

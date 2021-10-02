@@ -18,5 +18,9 @@ The command line interface for the sego framework, is a helper tool that assists
 RESTful API, distributed compute task manager, functions as a service and other of <a href="https://github.com/sambe-consulting/sego">Sego</a>'s subsystems.
 
 1. <a href="documentation/installation.md">Installation Instructions</a>
-2. <a href="documentation/getting-started.md">Getting Started</a>
+2. <a href="documentation/app.md">Usage : `app` command</a>
+3. <a href="documentation/controller.md">Usage : `controller` command</a>
+4. <a href="documentation/db.md">Usage : `db` command</a>
+5. <a href="documentation/middleware.md">Usage : `middleware` command</a>
+6. <a href="documentation/function.md">Usage : `function` command</a>
 

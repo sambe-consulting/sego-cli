@@ -13,5 +13,5 @@ class {{controller_name}}(BaseController):
           pass
 
       def index(self, request, response):
-         response.html = self.Views.render_view("home.html")
+         return self.Views.render_view("home.html")
 
