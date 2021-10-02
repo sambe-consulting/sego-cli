@@ -126,7 +126,11 @@ or
 ```bash
 $sego app delete --id 0f99edc3-0125-47ac-a5a5-a724103bcbb7  --clean-up =true 
 ```
+
+
 <h3 id="app-register">Register Command</h3>
+
+
  The **register** task, registers an application to be managed by  sego-cli the **--app-dir**
 must be set to the home path of the app. This can reverse the effects of the **delete** command so long the **--clean-up** flag was not set.
 To show the workings of the **register** task lets:
