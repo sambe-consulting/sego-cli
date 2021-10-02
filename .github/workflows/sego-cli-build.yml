@@ -55,10 +55,10 @@ jobs:
         with:
            path: sego/
 
-      - name: Install dependencies
-        working-directory: sego
-        run: |
-          pip install -r requirements.txt --target . --upgrade
+#      - name: Install dependencies
+#        working-directory: sego
+#        run: |
+#          pip install -r requirements.txt --target . --upgrade
 
 
       - name: Generate zip folder
