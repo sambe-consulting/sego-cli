@@ -109,6 +109,7 @@ sudo mv sego /usr/local/bin/sego
  sego 
 ```
 When the command is ran for the first time it will execute a series of setup steps to make sure it has a suitable environment to run.
+
 6. Test the CLI :
 ```bash
  sego --help  
@@ -157,6 +158,7 @@ sudo mv sego /usr/local/bin/sego
  sego  
 ```
 When the command is ran for the first time it will execute a series of setup steps to make sure it has a suitable environment to run.
+
 6. Test the CLI :
 ```bash
  sego --help  
