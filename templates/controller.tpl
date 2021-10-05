@@ -1,10 +1,10 @@
-# ************************************************************************#
-# Title:                    {{controller_title}}                          #
-# Description:              {{controller_description}}                    #
-# Author:                   {{author}} <{{author_email}}>                 #
-# Original Date:            {{generation_date}}                           #
-# Version:                  {{version}}                                   #
-# ************************************************************************#
+# ************************************************************************
+# Title:                    {{controller_title}}
+# Description:              {{controller_description}}
+# Author:                   {{author}} <{{author_email}}>
+# Original Date:            {{generation_date}}
+# Version:                  {{version}}
+# ************************************************************************
 from . import BaseController
 
 class {{controller_name}}(BaseController):
