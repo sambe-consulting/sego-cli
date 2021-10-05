@@ -1,9 +1,9 @@
-# ************************************************************************#
-# Title:                    {{middleware_name}}                           #
-# Description:              {{middleware_description}}                    #
-# Author:                   {{author}} <{{author_email}}>                 #
-# Original Date:            {{generation_date}}                           #
-# Version:                  {{version}}                                   #
+# ************************************************************************
+# Title:                    {{middleware_name}}
+# Description:              {{middleware_description}}
+# Author:                   {{author}} <{{author_email}}>
+# Original Date:            {{generation_date}}
+# Version:                  {{version}}
 # ************************************************************************
 
 from sego.Middleware.Middleware import Middleware
