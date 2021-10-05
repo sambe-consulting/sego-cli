@@ -121,7 +121,6 @@ class ControllerUtilities:
 
         ctrl_data = {}
         controller_path = Path(self.active_app_dict["app_directory"]) / "app/Controllers"
-        print(controller_path)
         exit_flag = True
         ctrl_data["name"] = input(
             colored("Please enter controller name ", "green") + colored("e.g HomeController : ", "yellow"))
